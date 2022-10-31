@@ -334,18 +334,19 @@
       jp: to_jp
   };
 
-  var loc = /*#__PURE__*/Object.freeze({
+  var Locale = /*#__PURE__*/Object.freeze({
     __proto__: null,
     from: fromDicts,
     to: toDicts
   });
 
-  const Converter = ConverterBuilder(loc);
+  const Converter = ConverterBuilder(Locale);
 
   exports.Converter = Converter;
   exports.ConverterFactory = ConverterFactory;
   exports.CustomConverter = CustomConverter;
   exports.HTMLConverter = HTMLConverter;
+  exports.Locale = Locale;
   exports.Trie = Trie;
 
   Object.defineProperty(exports, '__esModule', { value: true });

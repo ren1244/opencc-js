@@ -5,7 +5,7 @@
 這個版本和原先版本一樣，在 node 中可以透過 `import` 引用 opencc-js
 
 ```javascript
-import OpenCC from 'opencc-js';
+import * as OpenCC from 'opencc-js';
 
 const converter = OpenCC.Converter({from: 'tw', to: 'cn'});
 console.log(converter('漢語'));
@@ -18,9 +18,9 @@ console.log(converter('漢語'));
 ```javascript
 //這段程式用 rollup 打包出來大小不到 100k。
 import * as OpenCC from 'opencc-js/core'; //核心程式碼，相當以前的 main.js
-import * as loc from 'opencc-js/preset'; //預設的字典資料，相當於以前那些 data
+import * as Locale from 'opencc-js/preset'; //預設的字典資料，相當於以前那些 data
 
-const converter = OpenCC.ConverterFactory(loc.from.tw, loc.to.cn);
+const converter = OpenCC.ConverterFactory(Locale.from.tw, Locale.to.cn);
 console.log(converter('漢語'));
 ```
 
@@ -57,9 +57,9 @@ console.log(converter('漢語'));
 ```html
 <script type="module">
   import * as OpenCC from './dist/esm/core.js';
-  import * as loc from './dist/esm/preset/t2cn.js'; //視情況可用 cn2t.js 或 full.js
+  import * as Locale from './dist/esm/preset/t2cn.js'; //視情況可用 cn2t.js 或 full.js
 
-  const converter = OpenCC.ConverterFactory(loc.from.tw, loc.to.cn);
+  const converter = OpenCC.ConverterFactory(Locale.from.tw, Locale.to.cn);
   console.log(converter('漢語'));
 </script>
 ```
@@ -89,18 +89,18 @@ const myDict2 = '香蕉 🍌️|蘋果 🍎️|梨 🍐️';
 
 ```javascript
 import * as OpenCC from 'opencc-js';
-import * as loc from 'opencc-js/preset';
+import * as Locale from 'opencc-js/preset';
 
 //自訂字典
 const myDict = [
     ['yyds', '永遠的神']
 ];
 
-//把 loc.from.cn 與自訂字典合併
-const mergedDictGroup = Array.from(loc.from.cn); //copy loc.from.cn to mergedDictGroup
+//把 Locale.from.cn 與自訂字典合併
+const mergedDictGroup = Array.from(Locale.from.cn); //copy Locale.from.cn to mergedDictGroup
 mergedDictGroup.push(myDict); //add custom Dict
 
-const converter = OpenCC.ConverterFactory(mergedDictGroup, loc.to.tw);
+const converter = OpenCC.ConverterFactory(mergedDictGroup, Locale.to.tw);
 console.log(converter('汉语yyds')); //output: "漢語永遠的神"
 ```
 
@@ -108,7 +108,7 @@ console.log(converter('汉语yyds')); //output: "漢語永遠的神"
 
 ```javascript
 import * as OpenCC from 'opencc-js';
-import * as loc from 'opencc-js/preset';
+import * as Locale from 'opencc-js/preset';
 
 //自訂字典
 const myDict = [
@@ -118,7 +118,7 @@ const myDict = [
 const newDictGroup = [myDict]
 
 //等同於以前用預設資料轉換後，再用 CustomConvert 再轉一次
-const converter = OpenCC.ConverterFactory(loc.from.cn, loc.to.tw, newDictGroup);
+const converter = OpenCC.ConverterFactory(Locale.from.cn, Locale.to.tw, newDictGroup);
 console.log(converter('汉语yyds')); //output: "漢語永遠的神"
 ```
 
@@ -145,10 +145,10 @@ console.log(converter('汉语yyds')); //output: "漢語永遠的神"
 ```html
 <script type="module">
   import * as OpenCC from './dist/esm/core.js';
-  import * as loc from './dist/esm/preset/t2cn.js';
+  import * as Locale from './dist/esm/preset/t2cn.js';
 
   //製造缺少的 Converter 函數
-  const Converter = OpenCC.ConverterBuilder(loc); 
+  const Converter = OpenCC.ConverterBuilder(Locale);
 
   const converter = Converter({form: 'tw', to: 'cn'});
   console.log(converter('漢語'));
